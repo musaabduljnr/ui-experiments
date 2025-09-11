@@ -46,4 +46,4 @@ Every project will include:
 ## 🚀 How to Run Locally
 1. Clone this repo:  
    ```bash
-   git clone https://github.com/YOUR-USERNAME/ui-experiments.git
+   git clone https://github.com/musaabduljnr/ui-experiments.git
