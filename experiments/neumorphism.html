@@ -1,581 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Neumorphic Login — Musa A. Abubakar</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    /* BOX-SIZING + base */
-    *, *::before, *::after { box-sizing: border-box; }
-
-    :root{
-      --bg-1: #0b1220;
-      --bg-2: #0f1724;
-      --card-bg: rgba(255,255,255,0.03);
-      --muted: #9aa6b2;
-      --text: #e6eef6;
-      --accent: #2563eb;
-      --accent-strong: #1d4ed8;
-      --glass-border: rgba(255,255,255,0.06);
-      --glass-shadow: rgba(2,6,23,0.65);
-    }
-
-    html,body {
-      height:100%;
-      margin:0;
-      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(160deg,var(--bg-1) 0%, var(--bg-2) 100%);
-      color:var(--text);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-
-    .wrap {
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-    }
-
-    /* Card */
-    .card {
-      width:100%;
-      max-width:440px;
-      border-radius:16px;
-      padding:26px;
-      background: var(--card-bg);
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 10px 30px var(--glass-shadow);
-      backdrop-filter: blur(10px);
-      overflow: visible; /* allow any browser UI to overlay without clipping layout */
-    }
-
-    .brand {
-      display:flex;
-      gap:12px;
-      align-items:center;
-      margin-bottom:12px;
-    }
-    .brand img {
-      width:48px; height:48px; border-radius:999px;
-      border:2px solid rgba(255,255,255,0.09);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-      object-fit:cover;
-      flex-shrink:0;
-    }
-    .brand .title { font-weight:700; font-size:1.02rem; color:var(--text); }
-    .brand .subtitle { font-size:0.82rem; color:var(--muted); }
-
-    h1 { margin:6px 0 10px 0; font-size:1.4rem; font-weight:700; }
-    .desc { margin:0 0 16px 0; color:var(--muted); font-size:0.95rem; }
-
-    form { display:flex; flex-direction:column; gap:12px; }
-
-    .field { position:relative; }
-
-    label { display:block; font-size:0.78rem; color:var(--muted); margin-bottom:6px; user-select:none; }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-      display:block;
-      width:100%;
-      padding:12px 44px 12px 44px; /* space for icons */
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,0.04);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
-      color: var(--text);
-      font-size:1rem;
-      outline:none;
-      box-shadow: inset 6px 6px 12px rgba(0,0,0,0.25);
-      transition: box-shadow .15s ease, border-color .12s ease;
-    }
-
-    /* ensure long typed text scrolls inside input and does not overflow the layout */
-    input { overflow: auto; white-space: nowrap; text-overflow: ellipsis; }
-
-    .icon {
-      position:absolute;
-      left:12px;
-      top:50%;
-      transform:translateY(-50%);
-      width:20px; height:20px;
-      opacity:0.95;
-      fill: rgba(255,255,255,0.85);
-      pointer-events:none;
-    }
-
-    input:focus {
-      border-color: rgba(37,99,235,0.9);
-      box-shadow: 0 6px 20px rgba(37,99,235,0.08), inset 6px 6px 12px rgba(0,0,0,0.28);
-    }
-
-    /* password toggle (right side) */
-    .toggle-pass {
-      position:absolute;
-      right:8px;
-      top:50%;
-      transform:translateY(-50%);
-      background:transparent;
-      border:none;
-      color:var(--muted);
-      cursor:pointer;
-      padding:8px;
-      border-radius:8px;
-    }
-    .toggle-pass:focus { outline:2px solid rgba(37,99,235,0.14); }
-
-    .btn-primary {
-      margin-top:6px;
-      width:100%;
-      padding:12px 14px;
-      border-radius:12px;
-      border:none;
-      cursor:pointer;
-      font-weight:700;
-      background: linear-gradient(90deg, var(--accent), var(--accent-strong));
-      color:white;
-      box-shadow: 0 8px 20px rgba(29,78,216,0.22);
-      transition: transform .08s ease, box-shadow .12s ease, opacity .12s ease;
-    }
-    .btn-primary:active{ transform: translateY(1px); }
-    .btn-primary:hover{ opacity:0.98; }
-
-    .row { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:6px; font-size:0.9rem; }
-    .link { color:var(--accent); text-decoration:none; font-weight:600; }
-
-    .divider { display:flex; align-items:center; gap:12px; margin:14px 0; color:var(--muted); font-size:0.9rem; }
-    .divider::before, .divider::after { content:""; flex:1; height:1px; background: rgba(255,255,255,0.04); border-radius:2px; }
-
-    .socials { display:flex; gap:10px; flex-wrap:wrap; }
-    .social-btn {
-      flex:1 1 100%;
-      display:flex; align-items:center; gap:10px; justify-content:center;
-      padding:10px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.06); color:var(--text); font-weight:600; cursor:pointer;
-      transition: background .12s ease, transform .08s ease;
-    }
-    .social-btn:hover { background: rgba(255,255,255,0.09); transform: translateY(-2px); }
-    .social-icon { width:18px; height:18px; display:inline-block; vertical-align:middle; }
-
-    @media (min-width:640px){
-      .social-btn { flex:1 1 auto; }
-      .socials { flex-direction:row; }
-    }
-
-    .small { font-size:0.86rem; color:var(--muted); text-align:center; margin-top:12px; }
-
-    /* Autofill styling — ensures autofill doesn't break color/box-shadow */
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus {
-      -webkit-text-fill-color: var(--text) !important;
-      -webkit-box-shadow: 0 0 0px 1000px rgba(255,255,255,0.02) inset !important;
-      box-shadow: 0 0 0px 1000px rgba(255,255,255,0.02) inset !important;
-      transition: background-color 5000s ease-in-out 0s;
-    }
-
-    /* Prevent horizontal overflow on very small screens */
-    html,body,#root { max-width:100vw; overflow-x:hidden; }
-
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Musa A. Abubakar - UI/UX Experiments</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div class="wrap">
-    <div class="card" role="dialog" aria-labelledby="loginTitle">
-      <div class="brand">
-        <img src="your-image.jpg" alt="Musa A. Abubakar" />
-        <div>
-          <div class="title">Musa A. Abubakar</div>
-          <div class="subtitle">UI / UX experiments</div>
-        </div>
+<body class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen flex items-center justify-center">
+
+  <div class="w-full max-w-md bg-gray-800 rounded-2xl shadow-xl p-8 space-y-6">
+    <!-- Logo + Name -->
+    <div class="flex items-center space-x-4">
+      <img src="https://via.placeholder.com/60" alt="Musa Logo" class="w-14 h-14 rounded-full border border-gray-600">
+      <div>
+        <h1 class="text-xl font-bold">Musa A. Abubakar</h1>
+        <p class="text-sm text-gray-400">UI / UX Experiments</p>
       </div>
+    </div>
 
-      <h1 id="loginTitle">Sign in</h1>
-      <p class="desc">Use your account to access experiments and live demos.</p>
+    <!-- Sign In Form -->
+    <div>
+      <h2 class="text-2xl font-semibold mb-2">Sign in</h2>
+      <p class="text-gray-400 mb-6">Use your account to access experiments and live demos.</p>
 
-      <form id="loginForm" onsubmit="event.preventDefault(); handleSignIn();" autocomplete="off">
+      <form class="space-y-5">
         <!-- Email -->
-        <div class="field">
-          <label for="email">Email</label>
-          <!-- mail icon -->
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 6.5A2.5 2.5 0 014.5 4h15A2.5 2.5 0 0122 6.5v11a2.5 2.5 0 01-2.5 2.5h-15A2.5 2.5 0 012 17.5v-11zM4.4 6l7.6 4.9L19.6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <input id="email" name="email" type="email" inputmode="email" placeholder="you@example.com" required autocomplete="off" />
+        <div>
+          <label class="block text-sm mb-1" for="email">Email</label>
+          <input type="email" id="email" placeholder="you@example.com"
+            class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
         </div>
 
         <!-- Password -->
-        <div class="field">
-          <label for="password">Password</label>
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17a2 2 0 10.001-3.999A2 2 0 0012 17zm6-6V9a6 6 0 10-12 0v2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <input id="password" name="password" type="password" placeholder="Enter password" required autocomplete="off" />
-          <button type="button" class="toggle-pass" aria-label="Show password" onclick="togglePassword()">Show</button>
-        </div>
-
-        <button class="btn-primary" type="submit">Sign in</button>
-
-        <div class="row" style="margin-top:10px;">
-          <div style="font-size:0.9rem;color:var(--muted)"><label><input type="checkbox" id="remember" /> Remember</label></div>
-          <a class="link" href="#" onclick="event.preventDefault(); alert('Password reset flow not implemented in demo')">Forgot password?</a>
-        </div>
-
-        <div class="divider">or continue with</div>
-
-        <div class="socials" role="group" aria-label="Social sign in">
-          <button type="button" class="social-btn" onclick="socialSign('google')" aria-label="Continue with Google">
-            <span class="social-icon" aria-hidden="true">
-              <!-- small multicolor Google G -->
-              <svg viewBox="0 0 533.5 544.3" width="18" height="18"> <path d="M533.5 278.4..." fill="#4285F4"/></svg>
-            </span>
-            Continue with Google
-          </button>
-
-          <button type="button" class="social-btn" onclick="socialSign('github')" aria-label="Continue with GitHub">
-            <span class="social-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12..." /></svg>
-            </span>
-            Continue with GitHub
-          </button>
-
-          <button type="button" class="social-btn" onclick="socialSign('apple')" aria-label="Continue with Apple">
-            <span class="social-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.365 1.43c..." /></svg>
-            </span>
-            Continue with Apple
-          </button>
-        </div>
-
-        <p class="small">Don't have an account? <a href="#" class="link" onclick="event.preventDefault(); alert('Sign up flow not implemented in demo')">Sign up</a></p>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    // Toggle password visibility
-    function togglePassword(){
-      const pwd = document.getElementById('password');
-      const btn = document.querySelector('.toggle-pass');
-      if(!pwd) return;
-      const type = pwd.getAttribute('type') === 'password' ? 'text' : 'password';
-      pwd.setAttribute('type', type);
-      btn.textContent = type === 'password' ? 'Show' : 'Hide';
-    }
-
-    function handleSignIn(){
-      const email = document.getElementById('email').value.trim();
-      const pwd = document.getElementById('password').value;
-      if(!email || !pwd){
-        alert('Please enter email and password');
-        return;
-      }
-      alert('Signed in (demo): ' + email);
-    }
-
-    function socialSign(provider){
-      alert('Social sign-in: ' + provider);
-    }
-
-    // Extra safety: try to reduce browser autofill UI (may be ignored by some browsers)
-    (function disableAutoComplete(){
-      try {
-        document.getElementById('email').setAttribute('autocomplete','off');
-        document.getElementById('password').setAttribute('autocomplete','off');
-        // form has autocomplete off already
-      } catch(e){}
-    })();
-  </script>
-</body>
-  </html><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Neumorphic Login — Musa A. Abubakar</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    /* BOX-SIZING + base */
-    *, *::before, *::after { box-sizing: border-box; }
-
-    :root{
-      --bg-1: #0b1220;
-      --bg-2: #0f1724;
-      --card-bg: rgba(255,255,255,0.03);
-      --muted: #9aa6b2;
-      --text: #e6eef6;
-      --accent: #2563eb;
-      --accent-strong: #1d4ed8;
-      --glass-border: rgba(255,255,255,0.06);
-      --glass-shadow: rgba(2,6,23,0.65);
-    }
-
-    html,body {
-      height:100%;
-      margin:0;
-      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(160deg,var(--bg-1) 0%, var(--bg-2) 100%);
-      color:var(--text);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-
-    .wrap {
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-    }
-
-    /* Card */
-    .card {
-      width:100%;
-      max-width:440px;
-      border-radius:16px;
-      padding:26px;
-      background: var(--card-bg);
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 10px 30px var(--glass-shadow);
-      backdrop-filter: blur(10px);
-      overflow: visible; /* allow any browser UI to overlay without clipping layout */
-    }
-
-    .brand {
-      display:flex;
-      gap:12px;
-      align-items:center;
-      margin-bottom:12px;
-    }
-    .brand img {
-      width:48px; height:48px; border-radius:999px;
-      border:2px solid rgba(255,255,255,0.09);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-      object-fit:cover;
-      flex-shrink:0;
-    }
-    .brand .title { font-weight:700; font-size:1.02rem; color:var(--text); }
-    .brand .subtitle { font-size:0.82rem; color:var(--muted); }
-
-    h1 { margin:6px 0 10px 0; font-size:1.4rem; font-weight:700; }
-    .desc { margin:0 0 16px 0; color:var(--muted); font-size:0.95rem; }
-
-    form { display:flex; flex-direction:column; gap:12px; }
-
-    .field { position:relative; }
-
-    label { display:block; font-size:0.78rem; color:var(--muted); margin-bottom:6px; user-select:none; }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-      display:block;
-      width:100%;
-      padding:12px 44px 12px 44px; /* space for icons */
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,0.04);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
-      color: var(--text);
-      font-size:1rem;
-      outline:none;
-      box-shadow: inset 6px 6px 12px rgba(0,0,0,0.25);
-      transition: box-shadow .15s ease, border-color .12s ease;
-    }
-
-    /* ensure long typed text scrolls inside input and does not overflow the layout */
-    input { overflow: auto; white-space: nowrap; text-overflow: ellipsis; }
-
-    .icon {
-      position:absolute;
-      left:12px;
-      top:50%;
-      transform:translateY(-50%);
-      width:20px; height:20px;
-      opacity:0.95;
-      fill: rgba(255,255,255,0.85);
-      pointer-events:none;
-    }
-
-    input:focus {
-      border-color: rgba(37,99,235,0.9);
-      box-shadow: 0 6px 20px rgba(37,99,235,0.08), inset 6px 6px 12px rgba(0,0,0,0.28);
-    }
-
-    /* password toggle (right side) */
-    .toggle-pass {
-      position:absolute;
-      right:8px;
-      top:50%;
-      transform:translateY(-50%);
-      background:transparent;
-      border:none;
-      color:var(--muted);
-      cursor:pointer;
-      padding:8px;
-      border-radius:8px;
-    }
-    .toggle-pass:focus { outline:2px solid rgba(37,99,235,0.14); }
-
-    .btn-primary {
-      margin-top:6px;
-      width:100%;
-      padding:12px 14px;
-      border-radius:12px;
-      border:none;
-      cursor:pointer;
-      font-weight:700;
-      background: linear-gradient(90deg, var(--accent), var(--accent-strong));
-      color:white;
-      box-shadow: 0 8px 20px rgba(29,78,216,0.22);
-      transition: transform .08s ease, box-shadow .12s ease, opacity .12s ease;
-    }
-    .btn-primary:active{ transform: translateY(1px); }
-    .btn-primary:hover{ opacity:0.98; }
-
-    .row { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:6px; font-size:0.9rem; }
-    .link { color:var(--accent); text-decoration:none; font-weight:600; }
-
-    .divider { display:flex; align-items:center; gap:12px; margin:14px 0; color:var(--muted); font-size:0.9rem; }
-    .divider::before, .divider::after { content:""; flex:1; height:1px; background: rgba(255,255,255,0.04); border-radius:2px; }
-
-    .socials { display:flex; gap:10px; flex-wrap:wrap; }
-    .social-btn {
-      flex:1 1 100%;
-      display:flex; align-items:center; gap:10px; justify-content:center;
-      padding:10px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.06); color:var(--text); font-weight:600; cursor:pointer;
-      transition: background .12s ease, transform .08s ease;
-    }
-    .social-btn:hover { background: rgba(255,255,255,0.09); transform: translateY(-2px); }
-    .social-icon { width:18px; height:18px; display:inline-block; vertical-align:middle; }
-
-    @media (min-width:640px){
-      .social-btn { flex:1 1 auto; }
-      .socials { flex-direction:row; }
-    }
-
-    .small { font-size:0.86rem; color:var(--muted); text-align:center; margin-top:12px; }
-
-    /* Autofill styling — ensures autofill doesn't break color/box-shadow */
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus {
-      -webkit-text-fill-color: var(--text) !important;
-      -webkit-box-shadow: 0 0 0px 1000px rgba(255,255,255,0.02) inset !important;
-      box-shadow: 0 0 0px 1000px rgba(255,255,255,0.02) inset !important;
-      transition: background-color 5000s ease-in-out 0s;
-    }
-
-    /* Prevent horizontal overflow on very small screens */
-    html,body,#root { max-width:100vw; overflow-x:hidden; }
-
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <div class="card" role="dialog" aria-labelledby="loginTitle">
-      <div class="brand">
-        <img src="your-image.jpg" alt="Musa A. Abubakar" />
         <div>
-          <div class="title">Musa A. Abubakar</div>
-          <div class="subtitle">UI / UX experiments</div>
-        </div>
-      </div>
-
-      <h1 id="loginTitle">Sign in</h1>
-      <p class="desc">Use your account to access experiments and live demos.</p>
-
-      <form id="loginForm" onsubmit="event.preventDefault(); handleSignIn();" autocomplete="off">
-        <!-- Email -->
-        <div class="field">
-          <label for="email">Email</label>
-          <!-- mail icon -->
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 6.5A2.5 2.5 0 014.5 4h15A2.5 2.5 0 0122 6.5v11a2.5 2.5 0 01-2.5 2.5h-15A2.5 2.5 0 012 17.5v-11zM4.4 6l7.6 4.9L19.6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <input id="email" name="email" type="email" inputmode="email" placeholder="you@example.com" required autocomplete="off" />
+          <label class="block text-sm mb-1" for="password">Password</label>
+          <input type="password" id="password" placeholder="********"
+            class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
         </div>
 
-        <!-- Password -->
-        <div class="field">
-          <label for="password">Password</label>
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17a2 2 0 10.001-3.999A2 2 0 0012 17zm6-6V9a6 6 0 10-12 0v2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <input id="password" name="password" type="password" placeholder="Enter password" required autocomplete="off" />
-          <button type="button" class="toggle-pass" aria-label="Show password" onclick="togglePassword()">Show</button>
+        <!-- Options -->
+        <div class="flex items-center justify-between text-sm">
+          <label class="flex items-center space-x-2">
+            <input type="checkbox" class="form-checkbox text-blue-500">
+            <span>Remember me</span>
+          </label>
+          <a href="#" class="text-blue-400 hover:underline">Forgot password?</a>
         </div>
 
-        <button class="btn-primary" type="submit">Sign in</button>
-
-        <div class="row" style="margin-top:10px;">
-          <div style="font-size:0.9rem;color:var(--muted)"><label><input type="checkbox" id="remember" /> Remember</label></div>
-          <a class="link" href="#" onclick="event.preventDefault(); alert('Password reset flow not implemented in demo')">Forgot password?</a>
-        </div>
-
-        <div class="divider">or continue with</div>
-
-        <div class="socials" role="group" aria-label="Social sign in">
-          <button type="button" class="social-btn" onclick="socialSign('google')" aria-label="Continue with Google">
-            <span class="social-icon" aria-hidden="true">
-              <!-- small multicolor Google G -->
-              <svg viewBox="0 0 533.5 544.3" width="18" height="18"> <path d="M533.5 278.4..." fill="#4285F4"/></svg>
-            </span>
-            Continue with Google
-          </button>
-
-          <button type="button" class="social-btn" onclick="socialSign('github')" aria-label="Continue with GitHub">
-            <span class="social-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12..." /></svg>
-            </span>
-            Continue with GitHub
-          </button>
-
-          <button type="button" class="social-btn" onclick="socialSign('apple')" aria-label="Continue with Apple">
-            <span class="social-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.365 1.43c..." /></svg>
-            </span>
-            Continue with Apple
-          </button>
-        </div>
-
-        <p class="small">Don't have an account? <a href="#" class="link" onclick="event.preventDefault(); alert('Sign up flow not implemented in demo')">Sign up</a></p>
+        <!-- Submit -->
+        <button type="submit"
+          class="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition duration-200">
+          Sign in
+        </button>
       </form>
+    </div>
+
+    <!-- Divider -->
+    <div class="flex items-center space-x-2">
+      <hr class="flex-1 border-gray-700">
+      <span class="text-gray-400 text-sm">or continue with</span>
+      <hr class="flex-1 border-gray-700">
+    </div>
+
+    <!-- Social Login -->
+    <div class="space-y-3">
+      <button class="w-full flex items-center justify-center space-x-3 py-3 bg-gray-900 hover:bg-gray-700 border border-gray-600 rounded-lg transition">
+        <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google" class="w-5 h-5">
+        <span>Continue with Google</span>
+      </button>
+
+      <button class="w-full flex items-center justify-center space-x-3 py-3 bg-gray-900 hover:bg-gray-700 border border-gray-600 rounded-lg transition">
+        <img src="https://www.svgrepo.com/show/349375/github.svg" alt="GitHub" class="w-5 h-5">
+        <span>Continue with GitHub</span>
+      </button>
     </div>
   </div>
 
-  <script>
-    // Toggle password visibility
-    function togglePassword(){
-      const pwd = document.getElementById('password');
-      const btn = document.querySelector('.toggle-pass');
-      if(!pwd) return;
-      const type = pwd.getAttribute('type') === 'password' ? 'text' : 'password';
-      pwd.setAttribute('type', type);
-      btn.textContent = type === 'password' ? 'Show' : 'Hide';
-    }
-
-    function handleSignIn(){
-      const email = document.getElementById('email').value.trim();
-      const pwd = document.getElementById('password').value;
-      if(!email || !pwd){
-        alert('Please enter email and password');
-        return;
-      }
-      alert('Signed in (demo): ' + email);
-    }
-
-    function socialSign(provider){
-      alert('Social sign-in: ' + provider);
-    }
-
-    // Extra safety: try to reduce browser autofill UI (may be ignored by some browsers)
-    (function disableAutoComplete(){
-      try {
-        document.getElementById('email').setAttribute('autocomplete','off');
-        document.getElementById('password').setAttribute('autocomplete','off');
-        // form has autocomplete off already
-      } catch(e){}
-    })();
-  </script>
 </body>
-            </html>
+    </html>
