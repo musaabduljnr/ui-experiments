@@ -1,68 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Musa | Neumorphic Login</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-    /* Neumorphism */
-    .neumorphic {
-      background: #e0e0e0;
-      box-shadow: 8px 8px 16px #bebebe,
-                  -8px -8px 16px #ffffff;
+    /* Neumorphism helpers (light mode) */
+    :root{
+      --bg:#e9eef3;
+      --surface: #e9eef3;
+      --shadow1: #c9ced3;
+      --shadow2: #ffffff;
+      --muted: #6b7280;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
     }
-    .neumorphic-input {
-      background: #e0e0e0;
-      box-shadow: inset 6px 6px 10px #bebebe,
-                  inset -6px -6px 10px #ffffff;
+
+    body { background: var(--bg); }
+
+    .neumo-card{
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 14px 14px 30px var(--shadow1), -10px -10px 24px var(--shadow2);
     }
-    .neumorphic-btn {
-      background: #e0e0e0;
-      box-shadow: 6px 6px 12px #bebebe,
-                  -6px -6px 12px #ffffff;
-      transition: all 0.2s ease;
+
+    .neumo-input {
+      background: var(--surface);
+      border-radius: 12px;
+      box-shadow: inset 6px 6px 12px var(--shadow1), inset -6px -6px 12px var(--shadow2);
+      border: 1px solid rgba(0,0,0,0.03);
     }
-    .neumorphic-btn:active {
-      box-shadow: inset 6px 6px 12px #bebebe,
-                  inset -6px -6px 12px #ffffff;
+
+    .neumo-btn {
+      background: var(--surface);
+      border-radius: 12px;
+      box-shadow: 8px 8px 18px var(--shadow1), -6px -6px 14px var(--shadow2);
+      border: 1px solid rgba(0,0,0,0.04);
+      transition: transform .08s ease, box-shadow .12s ease, background .12s ease;
     }
+    .neumo-btn:active {
+      box-shadow: inset 6px 6px 12px var(--shadow1), inset -6px -6px 12px var(--shadow2);
+      transform: translateY(1px);
+    }
+
+    /* primary CTA (keeps neumorphic feel but blue for clear affordance) */
+    .primary {
+      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+      color: white;
+      box-shadow: 0 10px 24px rgba(37,99,235,0.18), 8px 8px 18px var(--shadow1), -6px -6px 14px var(--shadow2);
+    }
+    .primary:active { transform: translateY(1px); }
+
+    /* small helpers */
+    .icon-fill { fill: currentColor; }
+    .no-autofill:-internal-autofill-selected { background-color: transparent; }
+
+    /* ensure card overflow visible so browser autocompletes don't visually clip */
+    .neumo-card { overflow: visible; }
+
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center bg-gray-200 font-sans">
+<body class="min-h-screen flex items-center justify-center font-inter-antialiased">
 
-  <div class="w-full max-w-md neumorphic rounded-2xl p-8">
-    <!-- Header -->
-    <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Sign in to Musa</h2>
+  <main class="w-full max-w-md mx-4">
+    <div class="neumo-card">
 
-    <!-- Form -->
-    <form action="#" class="space-y-4">
-      <input type="email" placeholder="Email" class="neumorphic-input w-full p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
-      <input type="password" placeholder="Password" class="neumorphic-input w-full p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      <!-- logo + name (top-left) -->
+      <div class="flex items-center gap-4 mb-6">
+        <img src="your-image.jpg" alt="Musa A. Abubakar" class="w-14 h-14 rounded-full border border-gray-200 object-cover shadow-sm">
+        <div>
+          <div class="text-lg font-semibold text-gray-800">Musa A. Abubakar</div>
+          <div class="text-sm text-gray-500">UI / UX Experiments</div>
+        </div>
+      </div>
 
-      <button type="submit" class="neumorphic-btn w-full py-3 rounded-lg font-semibold text-gray-700 hover:bg-gray-300">Sign In</button>
-    </form>
+      <!-- heading -->
+      <h2 class="text-2xl font-bold text-gray-800 mb-2">Sign in</h2>
+      <p class="text-sm text-gray-500 mb-6">Use your account to access experiments and live demos.</p>
 
-    <!-- Divider -->
-    <div class="flex items-center my-6">
-      <hr class="flex-grow border-gray-400">
-      <span class="mx-2 text-gray-600 text-sm">OR</span>
-      <hr class="flex-grow border-gray-400">
+      <!-- form -->
+      <form class="space-y-4" autocomplete="off" onsubmit="event.preventDefault(); handleSignIn();">
+        <div>
+          <label for="email" class="sr-only">Email</label>
+          <input id="email" name="email" type="email" required
+                 placeholder="you@example.com"
+                 class="neumo-input w-full px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200" />
+        </div>
+
+        <div class="relative">
+          <label for="password" class="sr-only">Password</label>
+          <input id="password" name="password" type="password" required
+                 placeholder="Enter your password"
+                 class="neumo-input w-full px-4 py-3 pr-20 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200" />
+          <button type="button" onclick="togglePassword()" class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-600 px-2 py-1 rounded-md hover:bg-gray-100">
+            Show
+          </button>
+        </div>
+
+        <!-- row: remember + forgot -->
+        <div class="flex items-center justify-between text-sm">
+          <label class="inline-flex items-center gap-2 text-gray-600">
+            <input type="checkbox" class="w-4 h-4 rounded border-gray-300" />
+            <span>Remember me</span>
+          </label>
+          <a href="#" class="text-sm text-blue-600 hover:underline">Forgot password?</a>
+        </div>
+
+        <!-- CTA -->
+        <button type="submit" class="primary neumo-btn w-full py-3 font-semibold rounded-lg">Sign In</button>
+      </form>
+
+      <!-- divider -->
+      <div class="flex items-center my-6">
+        <div class="flex-grow h-px bg-gray-300"></div>
+        <div class="px-3 text-sm text-gray-500">or continue with</div>
+        <div class="flex-grow h-px bg-gray-300"></div>
+      </div>
+
+      <!-- social buttons (neumorphic style + icons) -->
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button onclick="socialSign('google')"
+                class="neumo-btn flex items-center justify-center gap-3 py-3 rounded-lg w-full text-gray-700 hover:bg-gray-50">
+          <!-- Google SVG (compact multicolor) -->
+          <svg class="w-5 h-5" viewBox="0 0 533.5 544.3" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M533.5 278.4c0-17.5-1.4-35.1-4.6-51.9H272v98.3h146.9c-6.3 34-25 62.8-53.4 82v68h86.3c50.6-46.6 80.7-115.4 80.7-196.4z" fill="#4285F4"/>
+            <path d="M272 544.3c72.7 0 133.8-24.1 178.4-65.4l-86.3-68c-24 16-54.6 25.4-92 25.4-70.8 0-130.8-47.8-152.3-112.1h-89.7v70.6C78.9 478.7 168.3 544.3 272 544.3z" fill="#34A853"/>
+            <path d="M119.7 323.2c-10.5-31.8-10.5-66.3 0-98.1V154.5H29.9c-35.2 69.8-35.2 153.1 0 222.9l89.8-54.2z" fill="#FBBC05"/>
+            <path d="M272 107.1c39.6 0 75.2 13.6 103.4 40.2l77.5-77.5C403.2 24.9 344.6 0 272 0 168.3 0 78.9 65.6 29.9 154.5l89.8 70.6C141.2 154.9 201.1 107.1 272 107.1z" fill="#EA4335"/>
+          </svg>
+          <span class="text-sm font-medium">Continue with Google</span>
+        </button>
+
+        <button onclick="socialSign('github')"
+                class="neumo-btn flex items-center justify-center gap-3 py-3 rounded-lg w-full text-gray-700 hover:bg-gray-50">
+          <!-- GitHub icon -->
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 008 10.95c.58.11.79-.25.79-.55v-2.02c-3.26.71-3.95-1.57-3.95-1.57-.53-1.35-1.29-1.7-1.29-1.7-1.06-.73.08-.72.08-.72 1.18.08 1.8 1.21 1.8 1.21 1.04 1.78 2.73 1.27 3.39.97.1-.75.41-1.27.74-1.56-2.6-.3-5.34-1.3-5.34-5.82 0-1.29.46-2.35 1.21-3.18-.12-.3-.53-1.52.12-3.17 0 0 .99-.32 3.25 1.2a11.3 11.3 0 015.92 0c2.27-1.52 3.25-1.2 3.25-1.2.65 1.65.24 2.87.12 3.17.75.83 1.21 1.89 1.21 3.18 0 4.54-2.74 5.51-5.36 5.81.43.38.81 1.1.81 2.23v3.3c0 .31.21.67.8.55A11.5 11.5 0 0023.5 12c0-6.35-5.15-11.5-11.5-11.5z"/>
+          </svg>
+          <span class="text-sm font-medium">Continue with GitHub</span>
+        </button>
+      </div>
+
+      <!-- signup -->
+      <p class="text-center text-sm text-gray-500 mt-6">Don't have an account? <a href="#" class="text-blue-600 hover:underline">Sign up</a></p>
     </div>
+  </main>
 
-    <!-- Social Buttons -->
-    <div class="flex flex-col space-y-3">
-      <button class="neumorphic-btn flex items-center justify-center py-3 rounded-lg font-medium text-gray-700 hover:bg-gray-300">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-red-500" viewBox="0 0 48 48"><path fill="currentColor" d="M44.5 20H24v8.5h11.8C34.7 32.6 30 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.8 1.1 7.9 3l5.9-5.9C34.4 6.5 29.5 4 24 4 13 4 4 13 4 24s9 20 20 20c11.5 0 20-8.5 20-20 0-1.3-.1-2.3-.5-4z"/></svg>
-        Continue with Google
-      </button>
+  <script>
+    function togglePassword(){
+      const pwd = document.getElementById('password');
+      if(!pwd) return;
+      const type = pwd.type === 'password' ? 'text' : 'password';
+      pwd.type = type;
+      document.querySelector('.neumo-card button[onclick="togglePassword()"]').textContent = type === 'password' ? 'Show' : 'Hide';
+    }
 
-      <button class="neumorphic-btn flex items-center justify-center py-3 rounded-lg font-medium text-gray-700 hover:bg-gray-300">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-800" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 008 10.95c.58.11.79-.25.79-.55v-2.02c-3.26.71-3.95-1.57-3.95-1.57-.53-1.35-1.29-1.7-1.29-1.7-1.06-.73.08-.72.08-.72 1.18.08 1.8 1.21 1.8 1.21 1.04 1.78 2.73 1.27 3.39.97.1-.75.41-1.27.74-1.56-2.6-.3-5.34-1.3-5.34-5.82 0-1.29.46-2.35 1.21-3.18-.12-.3-.53-1.52.12-3.17 0 0 .99-.32 3.25 1.2a11.3 11.3 0 015.92 0c2.27-1.52 3.25-1.2 3.25-1.2.65 1.65.24 2.87.12 3.17.75.83 1.21 1.89 1.21 3.18 0 4.54-2.74 5.51-5.36 5.81.43.38.81 1.1.81 2.23v3.3c0 .31.21.67.8.55A11.5 11.5 0 0023.5 12c0-6.35-5.15-11.5-11.5-11.5z"/></svg>
-        Continue with GitHub
-      </button>
-    </div>
-  </div>
+    function handleSignIn(){
+      const email = document.getElementById('email')?.value?.trim();
+      const pwd = document.getElementById('password')?.value;
+      if(!email || !pwd){
+        alert('Please enter email and password');
+        return;
+      }
+      // demo placeholder
+      alert('Signed in (demo): ' + email);
+    }
 
+    function socialSign(provider){
+      alert('Social sign-in: ' + provider);
+    }
+  </script>
 </body>
 </html>
