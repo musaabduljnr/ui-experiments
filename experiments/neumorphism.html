@@ -6,52 +6,61 @@
   <title>Neumorphic Login</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-900 min-h-screen flex items-center justify-center">
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
 
-  <div class="bg-gray-900 p-8 rounded-3xl shadow-[20px_20px_60px_#0a0a0a,-20px_-20px_60px_#1a1a1a] w-full max-w-sm">
-    <h2 class="text-white text-2xl font-bold mb-6 text-center">Sign In</h2>
+  <div class="bg-gray-100 p-8 rounded-3xl shadow-[20px_20px_60px_#c9c9c9,-20px_-20px_60px_#ffffff] w-full max-w-sm">
+    <div class="flex items-center gap-3 mb-6">
+      <img src="https://via.placeholder.com/50" alt="Logo" class="w-12 h-12 rounded-full shadow-[5px_5px_10px_#c9c9c9,-5px_-5px_10px_#ffffff]">
+      <div>
+        <h1 class="text-lg font-semibold text-gray-800">Musa A. Abubakar</h1>
+        <p class="text-sm text-gray-500">UI / UX Experiments</p>
+      </div>
+    </div>
+
+    <h2 class="text-gray-800 text-xl font-bold mb-4">Sign in</h2>
+    <p class="text-gray-500 mb-6 text-sm">Use your account to access experiments and live demos.</p>
 
     <!-- Email -->
     <input 
       type="email" 
       placeholder="Email" 
-      class="w-full mb-4 px-4 py-3 rounded-xl bg-gray-900 text-white placeholder-gray-400 shadow-[inset_5px_5px_10px_#0a0a0a,inset_-5px_-5px_10px_#1a1a1a] focus:outline-none focus:shadow-[inset_2px_2px_5px_#0a0a0a,inset_-2px_-2px_5px_#1a1a1a]"
+      class="w-full mb-4 px-4 py-3 rounded-xl bg-gray-100 text-gray-700 placeholder-gray-400 shadow-[inset_5px_5px_10px_#c9c9c9,inset_-5px_-5px_10px_#ffffff] focus:outline-none focus:shadow-[inset_2px_2px_5px_#c9c9c9,inset_-2px_-2px_5px_#ffffff]"
     >
 
     <!-- Password -->
     <input 
       type="password" 
       placeholder="Password" 
-      class="w-full mb-6 px-4 py-3 rounded-xl bg-gray-900 text-white placeholder-gray-400 shadow-[inset_5px_5px_10px_#0a0a0a,inset_-5px_-5px_10px_#1a1a1a] focus:outline-none focus:shadow-[inset_2px_2px_5px_#0a0a0a,inset_-2px_-2px_5px_#1a1a1a]"
+      class="w-full mb-6 px-4 py-3 rounded-xl bg-gray-100 text-gray-700 placeholder-gray-400 shadow-[inset_5px_5px_10px_#c9c9c9,inset_-5px_-5px_10px_#ffffff] focus:outline-none focus:shadow-[inset_2px_2px_5px_#c9c9c9,inset_-2px_-2px_5px_#ffffff]"
     >
 
     <!-- Sign In Button -->
     <button 
-      class="w-full py-3 rounded-xl text-white font-semibold bg-gray-900 shadow-[5px_5px_15px_#0a0a0a,-5px_-5px_15px_#1a1a1a] hover:shadow-[inset_5px_5px_10px_#0a0a0a,inset_-5px_-5px_10px_#1a1a1a] transition">
+      class="w-full py-3 rounded-xl text-gray-700 font-semibold bg-gray-100 shadow-[5px_5px_15px_#c9c9c9,-5px_-5px_15px_#ffffff] hover:shadow-[inset_5px_5px_10px_#c9c9c9,inset_-5px_-5px_10px_#ffffff] transition">
       Sign In
     </button>
 
     <!-- Divider -->
     <div class="flex items-center my-6">
-      <div class="flex-grow h-px bg-gray-700"></div>
-      <span class="px-2 text-gray-400 text-sm">or continue with</span>
-      <div class="flex-grow h-px bg-gray-700"></div>
+      <div class="flex-grow h-px bg-gray-300"></div>
+      <span class="px-2 text-gray-500 text-sm">or continue with</span>
+      <div class="flex-grow h-px bg-gray-300"></div>
     </div>
 
     <!-- Social Buttons -->
     <div class="flex flex-col gap-4">
-      <button class="py-3 rounded-xl bg-gray-900 text-white shadow-[5px_5px_15px_#0a0a0a,-5px_-5px_15px_#1a1a1a] hover:shadow-[inset_5px_5px_10px_#0a0a0a,inset_-5px_-5px_10px_#1a1a1a] transition">
+      <button class="py-3 rounded-xl bg-gray-100 text-gray-700 shadow-[5px_5px_15px_#c9c9c9,-5px_-5px_15px_#ffffff] hover:shadow-[inset_5px_5px_10px_#c9c9c9,inset_-5px_-5px_10px_#ffffff] transition">
         Continue with Google
       </button>
-      <button class="py-3 rounded-xl bg-gray-900 text-white shadow-[5px_5px_15px_#0a0a0a,-5px_-5px_15px_#1a1a1a] hover:shadow-[inset_5px_5px_10px_#0a0a0a,inset_-5px_-5px_10px_#1a1a1a] transition">
+      <button class="py-3 rounded-xl bg-gray-100 text-gray-700 shadow-[5px_5px_15px_#c9c9c9,-5px_-5px_15px_#ffffff] hover:shadow-[inset_5px_5px_10px_#c9c9c9,inset_-5px_-5px_10px_#ffffff] transition">
         Continue with GitHub
       </button>
     </div>
 
     <!-- Signup Link -->
-    <p class="text-center text-gray-400 text-sm mt-6">
+    <p class="text-center text-gray-500 text-sm mt-6">
       Don’t have an account? 
-      <a href="#" class="text-blue-400 hover:underline">Sign up</a>
+      <a href="#" class="text-blue-500 hover:underline">Sign up</a>
     </p>
   </div>
 
