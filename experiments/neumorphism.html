@@ -3,77 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Musa A. Abubakar - UI/UX Experiments</title>
+  <title>Neumorphic Login</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen flex items-center justify-center">
+<body class="bg-gray-900 min-h-screen flex items-center justify-center">
 
-  <div class="w-full max-w-md bg-gray-800 rounded-2xl shadow-xl p-8 space-y-6">
-    <!-- Logo + Name -->
-    <div class="flex items-center space-x-4">
-      <img src="https://via.placeholder.com/60" alt="Musa Logo" class="w-14 h-14 rounded-full border border-gray-600">
-      <div>
-        <h1 class="text-xl font-bold">Musa A. Abubakar</h1>
-        <p class="text-sm text-gray-400">UI / UX Experiments</p>
-      </div>
-    </div>
+  <div class="bg-gray-900 p-8 rounded-3xl shadow-[20px_20px_60px_#0a0a0a,-20px_-20px_60px_#1a1a1a] w-full max-w-sm">
+    <h2 class="text-white text-2xl font-bold mb-6 text-center">Sign In</h2>
 
-    <!-- Sign In Form -->
-    <div>
-      <h2 class="text-2xl font-semibold mb-2">Sign in</h2>
-      <p class="text-gray-400 mb-6">Use your account to access experiments and live demos.</p>
+    <!-- Email -->
+    <input 
+      type="email" 
+      placeholder="Email" 
+      class="w-full mb-4 px-4 py-3 rounded-xl bg-gray-900 text-white placeholder-gray-400 shadow-[inset_5px_5px_10px_#0a0a0a,inset_-5px_-5px_10px_#1a1a1a] focus:outline-none focus:shadow-[inset_2px_2px_5px_#0a0a0a,inset_-2px_-2px_5px_#1a1a1a]"
+    >
 
-      <form class="space-y-5">
-        <!-- Email -->
-        <div>
-          <label class="block text-sm mb-1" for="email">Email</label>
-          <input type="email" id="email" placeholder="you@example.com"
-            class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
-        </div>
+    <!-- Password -->
+    <input 
+      type="password" 
+      placeholder="Password" 
+      class="w-full mb-6 px-4 py-3 rounded-xl bg-gray-900 text-white placeholder-gray-400 shadow-[inset_5px_5px_10px_#0a0a0a,inset_-5px_-5px_10px_#1a1a1a] focus:outline-none focus:shadow-[inset_2px_2px_5px_#0a0a0a,inset_-2px_-2px_5px_#1a1a1a]"
+    >
 
-        <!-- Password -->
-        <div>
-          <label class="block text-sm mb-1" for="password">Password</label>
-          <input type="password" id="password" placeholder="********"
-            class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
-        </div>
-
-        <!-- Options -->
-        <div class="flex items-center justify-between text-sm">
-          <label class="flex items-center space-x-2">
-            <input type="checkbox" class="form-checkbox text-blue-500">
-            <span>Remember me</span>
-          </label>
-          <a href="#" class="text-blue-400 hover:underline">Forgot password?</a>
-        </div>
-
-        <!-- Submit -->
-        <button type="submit"
-          class="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition duration-200">
-          Sign in
-        </button>
-      </form>
-    </div>
+    <!-- Sign In Button -->
+    <button 
+      class="w-full py-3 rounded-xl text-white font-semibold bg-gray-900 shadow-[5px_5px_15px_#0a0a0a,-5px_-5px_15px_#1a1a1a] hover:shadow-[inset_5px_5px_10px_#0a0a0a,inset_-5px_-5px_10px_#1a1a1a] transition">
+      Sign In
+    </button>
 
     <!-- Divider -->
-    <div class="flex items-center space-x-2">
-      <hr class="flex-1 border-gray-700">
-      <span class="text-gray-400 text-sm">or continue with</span>
-      <hr class="flex-1 border-gray-700">
+    <div class="flex items-center my-6">
+      <div class="flex-grow h-px bg-gray-700"></div>
+      <span class="px-2 text-gray-400 text-sm">or continue with</span>
+      <div class="flex-grow h-px bg-gray-700"></div>
     </div>
 
-    <!-- Social Login -->
-    <div class="space-y-3">
-      <button class="w-full flex items-center justify-center space-x-3 py-3 bg-gray-900 hover:bg-gray-700 border border-gray-600 rounded-lg transition">
-        <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google" class="w-5 h-5">
-        <span>Continue with Google</span>
+    <!-- Social Buttons -->
+    <div class="flex flex-col gap-4">
+      <button class="py-3 rounded-xl bg-gray-900 text-white shadow-[5px_5px_15px_#0a0a0a,-5px_-5px_15px_#1a1a1a] hover:shadow-[inset_5px_5px_10px_#0a0a0a,inset_-5px_-5px_10px_#1a1a1a] transition">
+        Continue with Google
       </button>
-
-      <button class="w-full flex items-center justify-center space-x-3 py-3 bg-gray-900 hover:bg-gray-700 border border-gray-600 rounded-lg transition">
-        <img src="https://www.svgrepo.com/show/349375/github.svg" alt="GitHub" class="w-5 h-5">
-        <span>Continue with GitHub</span>
+      <button class="py-3 rounded-xl bg-gray-900 text-white shadow-[5px_5px_15px_#0a0a0a,-5px_-5px_15px_#1a1a1a] hover:shadow-[inset_5px_5px_10px_#0a0a0a,inset_-5px_-5px_10px_#1a1a1a] transition">
+        Continue with GitHub
       </button>
     </div>
+
+    <!-- Signup Link -->
+    <p class="text-center text-gray-400 text-sm mt-6">
+      Don’t have an account? 
+      <a href="#" class="text-blue-400 hover:underline">Sign up</a>
+    </p>
   </div>
 
 </body>
