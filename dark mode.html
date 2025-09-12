@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark/Light Mode Toggle</title>
+  <style>
+    /* Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+    :root {
+      --light-bg: #ffffff;
+      --light-text: #1e1e1e;
+      --dark-bg: #1a1b26;
+      --dark-text: #f0f0f0;
+
+      /* Accent colors */
+      --accent: #7c3aed; /* Purple */
+      --accent-glow: rgba(124, 58, 237, 0.4);
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: var(--light-bg);
+      color: var(--light-text);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    body.dark {
+      background: var(--dark-bg);
+      color: var(--dark-text);
+    }
+
+    .card {
+      padding: 2rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    body.dark .card {
+      background: rgba(30, 32, 46, 0.7);
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+
+    h1 {
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    /* Toggle Switch */
+    .toggle {
+      width: 60px;
+      height: 32px;
+      background: var(--accent);
+      border-radius: 50px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .toggle::before {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 24px;
+      height: 24px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    body.dark .toggle {
+      background: var(--accent);
+    }
+
+    body.dark .toggle::before {
+      transform: translateX(28px);
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Simple UI Toggle</h1>
+    <div class="toggle" id="theme-toggle"></div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById("theme-toggle");
+    const body = document.body;
+
+    toggle.addEventListener("click", () => {
+      body.classList.toggle("dark");
+    });
+  </script>
+</body>
+</html>
