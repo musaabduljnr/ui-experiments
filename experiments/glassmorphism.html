@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aurora Studio — Glass UI</title>
+
+  <!-- Tailwind via CDN (no build step) -->
+  <script>
+    // Small Tailwind config (accent color)
+    tailwind = { config: { theme: { extend: { colors: { accent: '#7c3aed' } } } } }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* Subtle extra polish beyond utilities */
+    :root {
+      --card-frost: 24px; /* applied as fallback */
+    }
+
+    /* Ensure backdrop-filter works smoothly with a WebKit fallback */
+    .glass {
+      -webkit-backdrop-filter: blur(var(--card-frost));
+      backdrop-filter: blur(var(--card-frost));
+      transition: box-shadow 220ms ease-out, transform 220ms ease-out, background-color 220ms ease-out;
+    }
+
+    /* Toggle dot inside custom switch */
+    .switch-dot {
+      transition: transform 220ms ease-out;
+    }
+
+    /* Accessible reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .glass, .switch-dot, .btn, .toast {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-sky-900 via-indigo-800 to-rose-900 font-sans text-slate-100 antialiased">
+
+  <!-- Decorative abstract shapes (no images) -->
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+    <div class="absolute -top-32 -left-20 w-80 h-80 rounded-full opacity-60"
+         style="background: radial-gradient(circle at 30% 30%, rgba(124,58,237,0.55), transparent 40%); filter: blur(60px);"></div>
+    <div class="absolute -bottom-36 -right-24 w-96 h-96 rounded-full opacity-50"
+         style="background: radial-gradient(circle at 70% 70%, rgba(6,182,212,0.45), transparent 35%); filter: blur(80px);"></div>
+  </div>
+
+  <main class="relative z-10 min-h-screen flex items-center justify-center p-6">
+    <section class="w-full max-w-xl p-8 rounded-3xl glass backdrop-blur-xl bg-white/12 border border-white/10 shadow-lg">
+      <header class="mb-6">
+        <h1 class="text-2xl font-semibold tracking-tight">Aurora Studio</h1>
+        <p class="mt-1 text-sm text-white/85">
+          Tools & updates that help you design faster — concise, focused, and delightful.
+        </p>
+      </header>
+
+      <form id="notifyForm" class="space-y-5" novalidate>
+        <div class="grid gap-3">
+          <label for="email" class="text-sm font-medium text-white/90">Work Email</label>
+          <input id="email" name="email" type="email" required
+                 class="bg-white/6 placeholder:text-white/40 text-white rounded-xl px-4 py-3 border border-white/6 focus:outline-none focus:ring-2 focus:ring-white/25 focus:ring-offset-0 transition-shadow duration-200"
+                 placeholder="you@company.com" aria-describedby="email-help" />
+          <p id="email-help" class="text-xs text-white/60">Get early access and occasional product notes — no spam.</p>
+        </div>
+
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <!-- Custom accessible switch for "Frost" (increases blur) -->
+            <label for="frostToggle" class="flex items-center gap-3 cursor-pointer select-none">
+              <span class="text-sm text-white/90">Frost</span>
+              <div class="relative">
+                <input id="frostToggle" type="checkbox" class="sr-only" aria-label="Increase frost intensity">
+                <div class="w-12 h-7 rounded-full bg-white/8 border border-white/6 flex items-center p-1 transition-colors duration-200">
+                  <span class="switch-dot w-5 h-5 rounded-full bg-white shadow-sm translate-x-0"></span>
+                </div>
+              </div>
+            </label>
+
+            <div class="hidden sm:flex items-center gap-2 text-xs text-white/70">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" class="opacity-90">
+                <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+              </svg>
+              <span>Backdrop blur</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button type="submit"
+                    class="btn inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 text-white text-sm font-medium border border-white/8 hover:bg-white/16 hover:scale-105 shadow-sm hover:shadow-md transition transform duration-200 ease-out">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="opacity-95">
+                <path d="M12 2v20M2 12h20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+              </svg>
+              Get Early Access
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="mt-6 border-t border-white/6 pt-4 flex items-center justify-between">
+        <dl class="grid grid-cols-3 gap-4 text-center">
+          <div>
+            <dt class="text-xs text-white/70">Minimal</dt>
+            <dd class="text-sm font-medium">Focused tools</dd>
+          </div>
+          <div>
+            <dt class="text-xs text-white/70">Responsive</dt>
+            <dd class="text-sm font-medium">Pixel-friendly</dd>
+          </div>
+          <div>
+            <dt class="text-xs text-white/70">Accessible</dt>
+            <dd class="text-sm font-medium">Keyboard-first</dd>
+          </div>
+        </dl>
+
+        <a href="#learn" class="ml-4 text-sm text-white/80 hover:text-white hover:underline transition-colors duration-200">Learn more →</a>
+      </div>
+
+      <!-- Toast / feedback -->
+      <div id="toast" class="toast mt-4 pointer-events-auto opacity-0 translate-y-2 text-sm inline-flex items-center gap-3 bg-white/8 text-white/95 px-4 py-2 rounded-lg shadow transition-all duration-220" role="status" aria-live="polite">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        You're on the list — we'll email updates.
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Minimal, purposeful JavaScript
+    (function () {
+      const form = document.getElementById('notifyForm');
+      const toast = document.getElementById('toast');
+      const frostToggle = document.getElementById('frostToggle');
+      const card = document.querySelector('section');
+
+      // Toggle visual "frost" intensity (backdrop blur and subtle background)
+      frostToggle.addEventListener('change', () => {
+        const dot = frostToggle.parentElement.querySelector('.switch-dot');
+        if (frostToggle.checked) {
+          // stronger frost
+          card.classList.remove('backdrop-blur-xl');
+          card.classList.add('backdrop-blur-2xl');
+          dot.style.transform = 'translateX(16px)';
+          card.style.setProperty('--card-frost', '40px');
+          card.style.backgroundColor = 'rgba(255,255,255,0.14)';
+        } else {
+          card.classList.remove('backdrop-blur-2xl');
+          card.classList.add('backdrop-blur-xl');
+          dot.style.transform = '';
+          card.style.setProperty('--card-frost', '24px');
+          card.style.backgroundColor = 'rgba(255,255,255,0.12)';
+        }
+      });
+
+      // Simple form handling: validate, show toast
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = form.email.value.trim();
+        if (!email || !email.includes('@')) {
+          // quick inline validation
+          form.email.focus();
+          form.email.classList.add('ring-2', 'ring-rose-500');
+          setTimeout(() => form.email.classList.remove('ring-2', 'ring-rose-500'), 900);
+          return;
+        }
+
+        // show toast
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateY(0)';
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateY(.5rem)';
+        }, 2500);
+
+        // clear input for clarity (simulate success)
+        form.reset();
+      });
+
+      // small accessibility improvement: remove inline focus ring if user starts mouse interactions
+      document.addEventListener('mousedown', () => document.documentElement.classList.add('using-mouse'));
+    }());
+  </script>
+</body>
+</html>
